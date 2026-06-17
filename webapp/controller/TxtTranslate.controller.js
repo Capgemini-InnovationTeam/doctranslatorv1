@@ -54,7 +54,7 @@ sap.ui.define([
 			});
 
 			oModel.setProperty("/files", aFiles);
-			this.getView().byId("translate").setEnabled(true);
+			this.getView().byId("txtTranslate").setEnabled(true);
 		},
 		Templatepress: function () {
 			
@@ -175,9 +175,9 @@ sap.ui.define([
 				}
 
 					that.oBusyDialog.close();
-					that.getView().byId("upload").clear();
-				},
-			error: function (_jqXHR, _textStatus, _errorThrown) {
+				that.getView().byId("txtUpload").clear();
+			},
+		error: function (_jqXHR, _textStatus, _errorThrown) {
 				var oModel = that.getView().getModel();
 				that.oBusyDialog.close();
 				// this.oBusyDialog.close();
@@ -199,9 +199,9 @@ sap.ui.define([
 
 			var aCols, oRowBinding, oSettings, oSheet, oTable;
 
-			if (!this._oTable) {
-				this._oTable = this.byId('idSummaryTable');
-			}
+		if (!this._oTable) {
+			this._oTable = this.byId('txtSummaryTable');
+		}
 
 			oTable = this._oTable;
 			oRowBinding = oTable.getBinding('items');
@@ -323,7 +323,7 @@ sap.ui.define([
 	},
 
 	handleSortDialogConfirm: function (oEvent) {
-			var oTable = this.byId("idSummaryTable"),
+		var oTable = this.byId("txtSummaryTable"),
 				mParams = oEvent.getParameters(),
 				oBinding = oTable.getBinding("items"),
 				sPath,
@@ -339,8 +339,8 @@ sap.ui.define([
 		},
 		handleFilterDialogConfirm: function (oEvent) {
 			
-			var oTable = this.byId("idSummaryTable");
-			var mParams = oEvent.getParameters();
+		var oTable = this.byId("txtSummaryTable");
+		var mParams = oEvent.getParameters();
 			var oBinding = oTable.getBinding("items");
 			var aFilters = [];
 			mParams.filterItems.forEach(function (oItem) {
@@ -370,27 +370,27 @@ sap.ui.define([
 					and: false
 				});
 			}
-			this.getView().byId("idSummaryTable").getBinding("items").filter(oTableSearchState, "Application");
+			this.getView().byId("txtSummaryTable").getBinding("items").filter(oTableSearchState, "Application");
 		},
-		handleClear: function () {
+	handleClear: function () {
 
-			var oTable = this.getView().byId("idSummaryTable");
-			// Get the binding for the items aggregation (assuming it's a list)
-			var oBinding = oTable.getBinding("items");
+		var oTable = this.getView().byId("txtSummaryTable");
+		// Get the binding for the items aggregation (assuming it's a list)
+		var oBinding = oTable.getBinding("items");
 
-			// Clear the current filters
-			oBinding.filter([]);
+		// Clear the current filters
+		oBinding.filter([]);
 
-			// Optional: Refresh the binding if needed
-			oBinding.refresh();
-			var oModel = new JSONModel({
-				files: []
-			});
-			this.getView().setModel(oModel);
-			this.getView().byId("upload").clear();
-			this.getView().byId("languageSelect").setSelectedKey("");
-			this.getView().byId("translate").setEnabled(false);
-		},
+		// Optional: Refresh the binding if needed
+		oBinding.refresh();
+		var oModel = new JSONModel({
+			files: []
+		});
+		this.getView().setModel(oModel);
+		this.getView().byId("txtUpload").clear();
+		this.getView().byId("txtLanguageSelect").setSelectedKey("");
+		this.getView().byId("txtTranslate").setEnabled(false);
+	},
 	
 
 	});

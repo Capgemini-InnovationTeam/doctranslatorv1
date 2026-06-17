@@ -57,7 +57,7 @@ sap.ui.define([
 			});
 
 			oModel.setProperty("/files", aFiles);
-			this.getView().byId("translate").setEnabled(true);
+			this.getView().byId("docTranslate").setEnabled(true);
 		},
 
 		handleFileChange: function (oEvent) {
@@ -90,11 +90,11 @@ sap.ui.define([
 					});
 				} else {
 					MessageBox.error("Unsupported file type: " + this.file[i].name);
-					this.getView().byId("upload").clear();
-				}
+				this.getView().byId("docUpload").clear();
 			}
+		}
 
-			oModel.setProperty("/files", aFileData);
+		oModel.setProperty("/files", aFileData);
 		},
 
 		onUploadPress: function (oFileData, index) {
@@ -151,9 +151,9 @@ sap.ui.define([
 								oModel.setProperty("/files/" + index + "/status", "Failed");
 							}
 
-							that.oBusyDialog.close();
-							that.getView().byId("upload").clear();
-						},
+						that.oBusyDialog.close();
+						that.getView().byId("docUpload").clear();
+					},
 						error: function (jqXHR, textStatus, errorThrown) {
 							that.oBusyDialog.close();
 							MessageBox.error("POST request failed: " + errorThrown);
@@ -175,9 +175,9 @@ sap.ui.define([
 		onExport: function () {
 			var aCols, oRowBinding, oSettings, oSheet, oTable;
 
-			if (!this._oTable) {
-				this._oTable = this.byId('idSummaryTable');
-			}
+		if (!this._oTable) {
+			this._oTable = this.byId('docSummaryTable');
+		}
 
 			oTable = this._oTable;
 			oRowBinding = oTable.getBinding('items');
@@ -259,8 +259,8 @@ sap.ui.define([
 			}.bind(this));
 		},
 
-		handleSortDialogConfirm: function (oEvent) {
-			var oTable = this.byId("idSummaryTable");
+	handleSortDialogConfirm: function (oEvent) {
+		var oTable = this.byId("docSummaryTable");
 			var mParams = oEvent.getParameters();
 			var oBinding = oTable.getBinding("items");
 			var aSorters = [];
@@ -269,8 +269,8 @@ sap.ui.define([
 			oBinding.sort(aSorters);
 		},
 
-		handleFilterDialogConfirm: function (oEvent) {
-			var oTable = this.byId("idSummaryTable");
+	handleFilterDialogConfirm: function (oEvent) {
+		var oTable = this.byId("docSummaryTable");
 			var mParams = oEvent.getParameters();
 			var oBinding = oTable.getBinding("items");
 			var aFilters = [];
@@ -301,21 +301,21 @@ sap.ui.define([
 				});
 			}
 
-			this.getView().byId("idSummaryTable").getBinding("items").filter(oTableSearchState, "Application");
+			this.getView().byId("docSummaryTable").getBinding("items").filter(oTableSearchState, "Application");
 		},
 
-		handleClear: function () {
-			var oTable = this.getView().byId("idSummaryTable");
-			var oBinding = oTable.getBinding("items");
-			oBinding.filter([]);
-			oBinding.refresh();
+	handleClear: function () {
+		var oTable = this.getView().byId("docSummaryTable");
+		var oBinding = oTable.getBinding("items");
+		oBinding.filter([]);
+		oBinding.refresh();
 
-			var oModel = new JSONModel({ files: [] });
-			this.getView().setModel(oModel);
-			this.getView().byId("upload").clear();
-			this.getView().byId("languageSelect").setSelectedKey("");
-			this.getView().byId("translate").setEnabled(false);
-		}
+		var oModel = new JSONModel({ files: [] });
+		this.getView().setModel(oModel);
+		this.getView().byId("docUpload").clear();
+		this.getView().byId("docLanguageSelect").setSelectedKey("");
+		this.getView().byId("docTranslate").setEnabled(false);
+	}
 
 	});
 

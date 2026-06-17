@@ -1,5 +1,5 @@
-<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:u="sap.ui.unified" 	xmlns:plugins="sap.m.plugins"
-	controllerName="doctranslationv1.controller.TxtTranslate" xmlns:html="http://www.w3.org/1999/xhtml">
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:u="sap.ui.unified"
+	controllerName="doctranslationv1.controller.TxtTranslate">
 	<App>
 		<pages>
 			<Page>
@@ -10,7 +10,7 @@
 							<!--<Image src="images/ailogo.png" width="150px"/>-->
 							<Button icon="sap-icon://nav-back" press="navBack"/>
 						</contentLeft>
-						<contentMiddle justifyContent="Center">
+						<contentMiddle >
 							<Title text="GenAI Text Translation Agent for SAP"></Title>
 						</contentMiddle>
 						<contentRight>
@@ -30,23 +30,23 @@
 							</VBox>
 							<HBox>
 									<!--<Button type="Emphasized" class="sapUiLargeMarginBegin" text="Template" press="Templatepress"></Button>-->
-						<u:FileUploader buttonText="Upload" buttonOnly="false" style="Emphasized" id="upload" class="sapUiMediumMarginBegin" width="100%" name="myFileUpload" multiple="true" uploadUrl="upload/"  tooltip="Upload your file to the local server"
+						<u:FileUploader buttonText="Upload" buttonOnly="false" style="Emphasized" id="txtUpload" class="sapUiMediumMarginBegin" width="100%" name="myFileUpload" multiple="true" uploadUrl="upload/"  tooltip="Upload your file to the local server"
 							change="handleFileChange"/>
 							
-							 <Select  items="{languages>/GCPlanguages}" class="sapUiLargeMarginBegin"  id="languageSelect" change=".onLanguageSelect">
+							 <Select  items="{languages>/GCPlanguages}" class="sapUiLargeMarginBegin"  id="txtLanguageSelect" change=".onLanguageSelect">
 							 	<core:Item key="" text="" />
                                 <core:Item key="{languages>code}" text="{languages>name}" />
            
             <!-- Add more languages as needed -->
         </Select>
-							<Button id="translate" type="Emphasized" class="sapUiMediumMarginBegin" enabled="false" text="Translate" press="onUploadPress"></Button>
+							<Button id="txtTranslate" type="Emphasized" class="sapUiMediumMarginBegin" enabled="false" text="Translate" press="onUploadPress"></Button>
 						 <!--<VBox  class="sapUiMediumMarginBegin" id="linksContainer" width="100%" height="auto" />-->
 						<!-- Removed Create PPT button -->
 							<Button type="Emphasized" class="sapUiLargeMarginBegin" text="Clear all" press="handleClear"></Button>
 						</HBox>
 				
 					
-					<Table justifyContent="Center" alternateRowColors="true" visible="true" id="idSummaryTable" width="80%" class="sapUiMediumMargin" items="{/files}">
+					<Table  alternateRowColors="true" visible="true" id="txtSummaryTable" width="80%" class="sapUiMediumMargin" items="{/files}">
 							<headerToolbar>
 										<OverflowToolbar>
 											<Title text="Document(s) for Translation" level="H2"/>
@@ -87,7 +87,7 @@
                         <Text text="{translationLanguage}" />
                       <Link  text="View Document" href="{translatedDocument}" target="_blank" visible="{= ${translatedDocument} ? true : false}" />
                        <ProgressIndicator width="60%" percentValue="{progress}" displayValue="{progress}%" state="{= ${progress} === 100 ? 'Success' : 'None'}"/>
-                      <Text text="{status}" state="{= ${status} === 'Complete' ? 'Success' : 'Warning'}"/>
+                      <ObjectStatus text="{status}" state="{= ${status} === 'Complete' ? 'Success' : 'Warning'}"/>
                     </cells>
 							</ColumnListItem>
 						</items>

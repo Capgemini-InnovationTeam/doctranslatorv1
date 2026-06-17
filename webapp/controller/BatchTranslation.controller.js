@@ -62,7 +62,7 @@ sap.ui.define([
 
 			oModel.setProperty("/files", aFiles);
 			this.saveFileStatuses();
-			this.getView().byId("translate").setEnabled(true);
+			this.getView().byId("batchTranslate").setEnabled(true);
 		},
 		 handleFileChange: function (oEvent) {
 
@@ -150,7 +150,7 @@ sap.ui.define([
 	
 		onUploadPress: function (_oFileData, _index) {
 			
-				this.getView().byId("translate").setEnabled(false);
+				this.getView().byId("batchTranslate").setEnabled(false);
 	 MessageBox.information("Batch Document Translation is Successfully Intiated and Once it is Completed you will be notify through Mail. ");
 	
 		//	this.oBusyDialog.open();
@@ -238,9 +238,9 @@ sap.ui.define([
 					}
 	// busy.close();
 					that.oBusyDialog.close();
-					that.getView().byId("upload").clear();
-				},
-			error: function (_jqXHR, _textStatus, _errorThrown) {
+				that.getView().byId("batchUpload").clear();
+			},
+		error: function (_jqXHR, _textStatus, _errorThrown) {
 				
 					
 				that.oBusyDialog.close();
@@ -293,19 +293,19 @@ sap.ui.define([
 					that.saveFileStatuses();
 				}
 
-				that.oBusyDialog.close();
-				that.getView().byId("upload").clear();
-			},
-			error: function (_jqXHR, _textStatus, _errorThrown) {
-				that.oBusyDialog.close();
-				
-				sap.m.MessageBox.error("POST request failed");
+			that.oBusyDialog.close();
+			that.getView().byId("batchUpload").clear();
+		},
+		error: function (_jqXHR, _textStatus, _errorThrown) {
+			that.oBusyDialog.close();
+			
+			sap.m.MessageBox.error("POST request failed");
 
-				that.saveFileStatuses();
-			}
-		});
-	},
-	GCPDstFile: function () {
+			that.saveFileStatuses();
+		}
+	});
+},
+GCPDstFile: function () {
 			var that = this;
 			$.ajax({
 				url: "https://gcpbatchdocumenttranslation.cfapps.us10-001.hana.ondemand.com/translatedfiles",
@@ -350,19 +350,19 @@ var startTime = new Date(aFiles[0].startAt);
 					that.saveFileStatuses();
 				}
 
-				that.oBusyDialog.close();
-				that.getView().byId("upload").clear();
-			},
-			error: function (_jqXHR, _textStatus, _errorThrown) {
-				that.oBusyDialog.close();
-			
-				sap.m.MessageBox.error("POST request failed");
+			that.oBusyDialog.close();
+			that.getView().byId("batchUpload").clear();
+		},
+		error: function (_jqXHR, _textStatus, _errorThrown) {
+			that.oBusyDialog.close();
+		
+			sap.m.MessageBox.error("POST request failed");
 
-				that.saveFileStatuses();
-			}
-		});
-	},
-	saveFileStatuses: function () {
+			that.saveFileStatuses();
+		}
+	});
+},
+saveFileStatuses: function () {
 		
 			var oModel = this.getView().getModel();
 			var aFiles = oModel.getProperty("/files");
@@ -415,9 +415,9 @@ var startTime = new Date(aFiles[0].startAt);
 
 			var aCols, oRowBinding, oSettings, oSheet, oTable;
 
-			if (!this._oTable) {
-				this._oTable = this.byId('idSummaryTable');
-			}
+		if (!this._oTable) {
+			this._oTable = this.byId('batchSummaryTable');
+		}
 
 			oTable = this._oTable;
 			oRowBinding = oTable.getBinding('items');
@@ -539,7 +539,7 @@ var startTime = new Date(aFiles[0].startAt);
 	},
 
 	handleSortDialogConfirm: function (oEvent) {
-			var oTable = this.byId("idSummaryTable"),
+		var oTable = this.byId("batchSummaryTable"),
 				mParams = oEvent.getParameters(),
 				oBinding = oTable.getBinding("items"),
 				sPath,
@@ -553,9 +553,9 @@ var startTime = new Date(aFiles[0].startAt);
 			// apply the selected sort settings
 			oBinding.sort(aSorters);
 		},
-		handleFilterDialogConfirm: function (oEvent) {
-			
-			var oTable = this.byId("idSummaryTable");
+	handleFilterDialogConfirm: function (oEvent) {
+		
+		var oTable = this.byId("batchSummaryTable");
 			var mParams = oEvent.getParameters();
 			var oBinding = oTable.getBinding("items");
 			var aFilters = [];
@@ -586,11 +586,11 @@ var startTime = new Date(aFiles[0].startAt);
 					and: false
 				});
 			}
-			this.getView().byId("idSummaryTable").getBinding("items").filter(oTableSearchState, "Application");
+			this.getView().byId("batchSummaryTable").getBinding("items").filter(oTableSearchState, "Application");
 		},
 		handleClear: function () {
 
-			var oTable = this.getView().byId("idSummaryTable");
+			var oTable = this.getView().byId("batchSummaryTable");
 			// Get the binding for the items aggregation (assuming it's a list)
 			var oBinding = oTable.getBinding("items");
 
@@ -607,9 +607,9 @@ var startTime = new Date(aFiles[0].startAt);
 			var aFiles = oModel.getProperty("/files");
 				localStorage.setItem("uploadedFiles", JSON.stringify(aFiles));
 				oModel.setProperty("/files", aFiles);
-			this.getView().byId("upload").clear();
-			this.getView().byId("languageSelect").setSelectedKey("");
-			this.getView().byId("translate").setEnabled(false);
+		this.getView().byId("batchUpload").clear();
+		this.getView().byId("batchLanguageSelect").setSelectedKey("");
+		this.getView().byId("batchTranslate").setEnabled(false);
 		},
 		registerWorkflow: function () {
 			this.getTokenForWOrkflow();
