@@ -1,0 +1,102 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:u="sap.ui.unified"
+	xmlns:plugins="sap.m.plugins" controllerName="doctranslationv1.controller.DocumentBrowse" xmlns:html="http://www.w3.org/1999/xhtml">
+	<App>
+		<pages>
+			<Page>
+				<customHeader>
+					<Bar>
+						<contentLeft>
+							<!--<Image src="https://res.cloudinary.com/coeportalimage1/image/upload/v1691002293/openai/openai_sb6krr.png" width="8.7rem"/>-->
+							<!--<Image src="images/ailogo.png" width="150px"/>-->
+							<Button icon="sap-icon://nav-back" press="navBack"/>
+						</contentLeft>
+						<contentMiddle justifyContent="Center">
+							<Title text="GenAI Document Translation Agent for SAP"></Title>
+						</contentMiddle>
+						<contentRight>
+							<Image src="images/whitelogocg.png" width="8.7rem"/>
+							<!--	<Button icon="sap-icon://action-settings" press="onChangeOpenAISettings"/>-->
+							<!--<Button icon="sap-icon://log" press="onlogoutPress"/>-->
+						</contentRight>
+					</Bar>
+				</customHeader>
+				<content>
+					<VBox width="100%" alignItems="Center" justifyContent="Center">
+						<Text  class="sapUiTinyMargin txt" text="Welcome to Capgemini GenAI Document Translation Agent for SAP"></Text>
+							<Text class="txt" text="Translate your documents quickly and easily. We support PDF, Word, and PPT files. Text in images will not be translated."></Text>
+						<Text  class="sapUiTinyMargin sapUiMediumMarginBottom txt" text="Get started now by uploading your document(s)!"></Text>
+						
+							</VBox>
+					<!--			<VBox width="100%" alignItems="Center" justifyContent="Center">-->
+					<!--<Text alignItems="Start" text="Translate your documents quickly and easily. We support PDF, Word, and PPT files."></Text>-->
+					<!--	<Text  class="sapUiTinyMargin sapUiMediumMarginBottom txt" text="Get started now by uploading your document(s)!"></Text>-->
+						
+					<!--	</VBox>-->
+							<HBox>
+						<u:FileUploader buttonText="Upload" buttonOnly="false" style="Emphasized" id="upload" class="sapUiMediumMarginBegin" width="100%" name="myFileUpload" multiple="true" uploadUrl="upload/"  tooltip="Upload your file to the local server"
+							change="handleFileChange"/>
+							
+							 <Select  items="{languages>/languages}" fileType="pdf,doc" class="sapUiLargeMarginBegin"  id="languageSelect" change=".onLanguageSelect">
+							 	<core:Item key="" text="" />
+                                <core:Item key="{languages>code}" text="{languages>name}" />
+           
+            <!-- Add more languages as needed -->
+        </Select>
+							<Button id="translate" type="Emphasized" class="sapUiMediumMarginBegin" enabled="false" text="Translate" press="onUploadPress"></Button>
+						 <!--<VBox  class="sapUiMediumMarginBegin" id="linksContainer" width="100%" height="auto" />-->
+						<!-- Removed Create PPT button -->
+							<Button type="Emphasized" class="sapUiLargeMarginBegin" text="Clear all" press="handleClear"></Button>
+						</HBox>
+				
+					
+					<Table justifyContent="Center" alternateRowColors="true" visible="true" id="idSummaryTable" width="80%" class="sapUiMediumMargin" items="{/files}">
+							<headerToolbar>
+										<OverflowToolbar>
+											<Title text="Document(s) for Translation" level="H2"/>
+											<ToolbarSpacer/>
+												<SearchField search="onSearch" width="17.5rem"/>
+											<Button tooltip="Sort" icon="sap-icon://sort" press="handleSortButtonPressed"/>
+											<Button tooltip="Filter" icon="sap-icon://filter" press="handleFilterButtonPressed"/>
+											<Button tooltip="Export Translation Log" icon="sap-icon://excel-attachment" press="onExport"/>
+											<!--<Button tooltip="Refresh" icon="sap-icon://refresh" press="handleRefreshPressed"/>-->
+											<!--<ToggleButton icon="sap-icon://menu" tooltip="Enable Custom Context Menu" press="onToggleContextMenu" />-->
+										</OverflowToolbar>
+									</headerToolbar>
+						<columns>
+							<Column  hAlign="Center" width="8%">
+								<Text text="File Name"/>
+							</Column>
+							<Column  hAlign="Center" width="8%">
+								<Text text="Source Document"/>
+							</Column>
+							<Column hAlign="Center" width="8%">
+								<Text text="Translation Language"/>
+							</Column>
+								<Column  hAlign="Center" width="8%">
+								<Text text="Translated Document"/>
+							</Column>
+								<Column  hAlign="Center" width="8%">
+								<Text text="Progress"/>
+							</Column>
+								<Column  hAlign="Center" width="8%">
+								<Text text="Status"/>
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem>
+							 <cells>
+                        <Text text="{fileName}" />
+                       <Link  text="View Source" href="{sourceFileLink}" target="_blank" visible="{= ${sourceFileLink} ? true : false}" />
+                        <Text text="{translationLanguage}" />
+                      <Link  text="View Document" href="{translatedDocument}" target="_blank" visible="{= ${translatedDocument} ? true : false}" />
+                       <ProgressIndicator width="60%" percentValue="{progress}" displayValue="{progress}%" state="{= ${progress} === 100 ? 'Success' : 'None'}"/>
+                      <Text text="{status}" state="{= ${status} === 'Complete' ? 'Success' : 'Warning'}"/>
+                    </cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+				</content>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

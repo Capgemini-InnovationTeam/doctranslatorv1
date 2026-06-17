@@ -1,0 +1,47 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout"
+	controllerName="doctranslationv1.controller.LoginPage" xmlns:html="http://www.w3.org/1999/xhtml">
+	<App  id="app">
+		<pages>
+			<Page>
+				<customHeader class="custHeader">
+					<Bar class="custHeader">
+						<contentLeft>
+							<!--<Image src="https://res.cloudinary.com/coeportalimage1/image/upload/v1691002293/openai/openai_sb6krr.png" width="8.7rem"/>-->
+							<!--<Image src="images/ailogo.png" width="150px"/>-->
+						</contentLeft>
+						<contentMiddle justifyContent="Center">
+							<Title text="GenAI Translation Agent for SAP"></Title>
+						</contentMiddle>
+						<contentRight>
+							<!--<Image src="images/whitelogocg.png" width="8.7rem"/>-->
+						</contentRight>
+					</Bar>
+				</customHeader>
+				<content>
+						<VBox width="100%" alignItems="Center" justifyContent="Center">
+						<Text  class="sapUiTinyMargin txt" text="Welcome to GenAI Translation Agent for SAP !"></Text>
+							<Text class="txt" text="Experience seamless and accurate translation services for SAP with our solution. Please note that access is restricted as usage entails costs."></Text>
+							<HBox>
+						<Text  class="sapUiTinyMargin sapUiMediumMarginBottom txt" text="For more information about the app and access, please contact us at"></Text>
+						<Link class="sapUiTinyMarginTop lnk"  text="CORP,Sapcoe Innovation Team" href="mailto:sapcoeinnovationteam@capgemini.com" target="_blank"  />
+						</HBox>
+							</VBox>
+					<FlexBox class="card" direction="Column" justifyContent="Center" alignItems="Center" >
+						<l:VerticalLayout class="loginCenter">
+							<Image alignItems="Center" src="images/cg.png" width="200px" height="150px" class="login-image"/>
+							<Input id="id_userid" placeholder="User ID" value="{/username}" width="400px" class="login-input"
+								valueHelpIconSrc="sap-icon://person-placeholder" showValueHelp="true"/>
+							<Input id="id_password" placeholder="Password" value="{/password}" type="Password" width="400px" class="login-input"
+								valueHelpIconSrc="sap-icon://locked" showValueHelp="true"/>
+							<Button text="Login" press="onLoginPress" width="400px" class="login-button"/>
+						</l:VerticalLayout>
+						<l:HorizontalLayout class="loginCenter sapUiMediumMarginBottom">
+							<Text text="New User?" class="register-button sapUiTinyMarginEnd"/>
+							<Link text="Sign Up" press="onRegisterPress"/>
+						</l:HorizontalLayout>
+					</FlexBox>
+				</content>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

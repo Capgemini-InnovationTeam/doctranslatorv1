@@ -1,0 +1,165 @@
+{
+  "_version": "1.82.0",
+  "sap.app": {
+    "id": "doctranslationv1",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.20.4",
+      "toolsId": "8c610950-fb44-4d6e-8c34-ed00c28b2d4b"
+    },
+    "crossNavigation": {
+      "inbounds": {
+       
+        "zsemobjdoctran-display": {
+          "semanticObject": "zsemobjdoctran",
+          "action": "display",
+          "title": "{{zsemobjdoctran-display.flpTitle}}",
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          }
+        }
+      }
+    },
+    "dataSources": {
+      "doc_translation_api": {
+        "uri": "/doc-translation-api/",
+        "type": "http",
+        "settings": {
+          "odataVersion": ""
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.145.0",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "doctranslationv1.i18n.i18n"
+        }
+      },
+      "languages": {
+        "type": "sap.ui.model.json.JSONModel",
+        "settings": {},
+        "uri": "./model/languages.json",
+        "preload": false
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "controlAggregation": "pages",
+        "controlId": "app",
+        "transition": "slide",
+        "type": "View",
+        "viewType": "XML",
+        "path": "doctranslationv1.view",
+        "async": true
+      },
+      "routes": [
+        {
+          "name": "View1",
+          "pattern": ":?query:",
+          "target": [
+            "View1"
+          ]
+        },
+        {
+          "name": "DocumentBrowse",
+          "pattern": "DocumentBrowse",
+          "target": [
+            "DocumentBrowse"
+          ]
+        },
+        {
+          "name": "TxtTranslate",
+          "pattern": "TxtTranslate",
+          "target": [
+            "TxtTranslate"
+          ]
+        },
+        {
+          "name": "BatchTranslation",
+          "pattern": "BatchTranslation",
+          "target": [
+            "BatchTranslation"
+          ]
+        }
+      ],
+      "targets": {
+        "View1": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewName": "View1"
+        },
+        "DocumentBrowse": {
+          "viewType": "XML",
+          "viewName": "DocumentBrowse"
+        },
+        "TxtTranslate": {
+          "viewType": "XML",
+          "viewName": "TxtTranslate"
+        },
+        "BatchTranslation": {
+          "viewType": "XML",
+          "viewName": "BatchTranslation"
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "doctranslationv1.view.App",
+      "type": "XML",
+      "id": "App",
+      "async": true
+    }
+  },
+  "sap.cloud": {
+    "public": true,
+    "service": "doctranslationv1"
+  }
+}

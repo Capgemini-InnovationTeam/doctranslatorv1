@@ -1,0 +1,38 @@
+<mvc:View controllerName="doctranslationv1.controller.View1" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m">
+
+		<App>
+			<pages>
+			<Page showHeader="false" class="titleFlexBox">
+				<content>
+					<FlexBox alignItems="Center" justifyContent="Center">
+						<Title text="GenAI Translation Agent for SAP" class="title sapUiSmallMarginTop"/>
+					</FlexBox>
+					<HBox alignItems="Center" justifyContent="Center" class="gridHbox">
+						<GenericTile class="gridBox item" header="Azure Document Translator" press="onpress"  frameType="OneByOne">
+							<TileContent footer="">
+								<ImageContent src="sap-icon://translate"/>
+							</TileContent>
+						</GenericTile>
+						<GenericTile class="sapUiLargeMarginBegin gridBox item" header="GCP Document Translator" press="ontxtpress" frameType="OneByOne">
+							<TileContent>
+								<ImageContent src="sap-icon://translate"/>
+							</TileContent>
+						</GenericTile>
+						<GenericTile class="sapUiLargeMarginBegin gridBox item" header="Batch Document Translator" press="onbatch" 
+							frameType="OneByOne">
+							<TileContent >
+								<ImageContent src="sap-icon://translate"/>
+							</TileContent>
+						</GenericTile>
+					</HBox>
+					<FlexBox justifyContent="Center" alignItems="Center" class="sapUiSmallMarginTop flexbox">
+						<Text class="boldText" text="Powered By"/>
+						<Image src="images/saplogo.png" class="sapUiSmallMargin bigImage"
+							mode="Background" width="5rem" height="2.5rem"/>
+					</FlexBox>
+				</content>
+			</Page>
+		</pages>
+		</App>
+
+</mvc:View>
