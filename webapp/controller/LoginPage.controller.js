@@ -7,6 +7,13 @@ sap.ui.define([
 ], function (Controller, MessageBox, JSONModel, MessageToast, SecurityUtils) {
 	"use strict";
 
+	// API endpoints configured via destinations (see xs-app.json)
+	var API_CONFIG = {
+		assets: {
+			dataProtectionNotice: "/cloudinary/coeportal/image/upload/v1676022677/Innovate%202%20Improve%20Event%202023/Data_Protection_Notice_Template_-_i2i_event_2_xtv5kc.pdf"
+		}
+	};
+
 	return Controller.extend("doctranslationv1.controller.LoginPage", {
 		onInit: function () {
 			this.oRouter = this.getOwnerComponent().getRouter();
@@ -378,12 +385,10 @@ sap.ui.define([
 		},
 
 		onNoticeLinkPress: function () {
-			var link = "https://res.cloudinary.com/coeportal/image/upload/v1676022677/Innovate%202%20Improve%20Event%202023/Data_Protection_Notice_Template_-_i2i_event_2_xtv5kc.pdf";
+			var link = API_CONFIG.assets.dataProtectionNotice;
 			
-			// Validate URL before opening
-			if (SecurityUtils.isValidURL(link, ["res.cloudinary.com"])) {
-				window.open(link, "_blank", "noopener,noreferrer");
-			}
+			// Open the document via destination proxy
+			window.open(link, "_blank", "noopener,noreferrer");
 		},
 
 		onConsentEmailPress: function () {

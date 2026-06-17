@@ -10,6 +10,15 @@ sap.ui.define([
 ], function (Controller, JSONModel, MessageToast, MessageBox, Fragment, Sorter, Spreadsheet, Device) {
 	"use strict";
 
+	// API endpoints configured via destinations (see xs-app.json)
+	var API_CONFIG = {
+		batchTranslation: {
+			upload: "/gcp-batch-api/gcpbatchdocumenttranslation",
+			sourceFiles: "/gcp-batch-api/sourcefiles",
+			translatedFiles: "/gcp-batch-api/translatedfiles"
+		}
+	};
+
 	return Controller.extend("doctranslationv1.controller.BatchTranslation", {
 
 		onInit: function () {
@@ -101,7 +110,7 @@ sap.ui.define([
 			oModel.setProperty("/files", gFiles);
 			this.saveFileStatuses();
 
-			var apiLink = "https://gcpbatchdocumenttranslation.cfapps.us10-001.hana.ondemand.com/gcpbatchdocumenttranslation";
+			var apiLink = API_CONFIG.batchTranslation.upload;
 			var form = new FormData();
 			for (var i = 0; i < gFiles.length; i++) {
 				form.append("files", this.file[i], this.file[i].name);
@@ -173,7 +182,7 @@ sap.ui.define([
 	GCPSrcFile: function () {
 			var that = this;
 			$.ajax({
-				url: "https://gcpbatchdocumenttranslation.cfapps.us10-001.hana.ondemand.com/sourcefiles",
+				url: API_CONFIG.batchTranslation.sourceFiles,
 				method: "GET",
 				timeout: 0,
 
@@ -223,7 +232,7 @@ sap.ui.define([
 GCPDstFile: function () {
 			var that = this;
 			$.ajax({
-				url: "https://gcpbatchdocumenttranslation.cfapps.us10-001.hana.ondemand.com/translatedfiles",
+				url: API_CONFIG.batchTranslation.translatedFiles,
 				method: "GET",
 				timeout: 0,
 

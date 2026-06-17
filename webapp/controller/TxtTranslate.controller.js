@@ -10,6 +10,16 @@ sap.ui.define([
 ], function (Controller, JSONModel, MessageToast, MessageBox, Fragment, Sorter, Spreadsheet, Device) {
 	"use strict";
 
+	// API endpoints configured via destinations (see xs-app.json)
+	var API_CONFIG = {
+		documentTranslation: {
+			upload: "/gcp-doc-api/gcpdocumenttranslation"
+		},
+		assets: {
+			template: "/cloudinary/coeportal/raw/upload/v1719996953/Template_cw9ciy.docx"
+		}
+	};
+
 	return Controller.extend("doctranslationv1.controller.TxtTranslate", {
 	onInit: function () {
 
@@ -49,8 +59,8 @@ sap.ui.define([
 		},
 		Templatepress: function () {
 			
-           var templateUrl = "https://res.cloudinary.com/coeportal/raw/upload/v1719996953/Template_cw9ciy.docx"; // URL to your document template
-            // Create an anchor element and trigger a download
+           var templateUrl = API_CONFIG.assets.template;
+           // Create an anchor element and trigger a download
     fetch(templateUrl)
                 .then(response => response.blob())
                 .then(blob => {
@@ -109,7 +119,7 @@ sap.ui.define([
 
 			this.oBusyDialog.open();
 
-			var apiLink = "https://gcpdocumenttranslation.cfapps.us10-001.hana.ondemand.com/gcpdocumenttranslation";
+			var apiLink = API_CONFIG.documentTranslation.upload;
 			var form = new FormData();
 			for (var i = 0; i < this.file.length; i++) {
 				form.append("files", this.file[i], this.file[i].name);

@@ -1,0 +1,17 @@
+{
+  "batchTranslation": {
+    "upload": "/gcp-batch-api/gcpbatchdocumenttranslation",
+    "sourceFiles": "/gcp-batch-api/sourcefiles",
+    "translatedFiles": "/gcp-batch-api/translatedfiles"
+  },
+  "documentTranslation": {
+    "upload": "/gcp-doc-api/gcpdocumenttranslation"
+  },
+  "assets": {
+    "template": "/cloudinary/coeportal/raw/upload/v1719996953/Template_cw9ciy.docx",
+    "dataProtectionNotice": "/cloudinary/coeportal/image/upload/v1676022677/Innovate%202%20Improve%20Event%202023/Data_Protection_Notice_Template_-_i2i_event_2_xtv5kc.pdf"
+  },
+  "userService": {
+    "createUser": "/jj7/capgemini/apps/coe/OpenAiDocGen/services/createUser.xsjs"
+  }
+}

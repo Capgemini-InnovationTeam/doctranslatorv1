@@ -2,7 +2,27 @@
   "welcomeFile": "/index.html",
   "authenticationMethod": "route",
   "routes": [
-     {
+    {
+      "source": "^/gcp-batch-api/(.*)$",
+      "target": "/$1",
+      "destination": "gcp_batch_translation",
+      "authenticationType": "none",
+      "csrfProtection": false
+    },
+    {
+      "source": "^/gcp-doc-api/(.*)$",
+      "target": "/$1",
+      "destination": "gcp_document_translation",
+      "authenticationType": "none",
+      "csrfProtection": false
+    },
+    {
+      "source": "^/cloudinary/(.*)$",
+      "target": "/$1",
+      "destination": "cloudinary_assets",
+      "authenticationType": "none"
+    },
+    {
       "source": "^/doc-translation-api/(.*)$",
       "target": "/$1",
       "destination": "doc_translation_api",
