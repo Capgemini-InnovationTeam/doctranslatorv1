@@ -6,8 +6,8 @@
       "source": "^/doc-translation-api/(.*)$",
       "target": "/$1",
       "destination": "doc_translation_api",
-      "authenticationType": "none",
-      "csrfProtection": false
+      "authenticationType": "xsuaa",
+      "csrfProtection": true
     },
     {
       "source": "^/resources/(.*)$",

@@ -2,6 +2,47 @@
   "xsappname": "doctranslationv1",
   "tenant-mode": "dedicated",
   "description": "Security profile of called application",
-  "scopes": [],
-  "role-templates": []
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.User",
+      "description": "Basic user access to document translation"
+    },
+    {
+      "name": "$XSAPPNAME.Admin",
+      "description": "Administrator access with full permissions"
+    }
+  ],
+  "role-templates": [
+    {
+      "name": "User",
+      "description": "Standard user role for document translation",
+      "scope-references": [
+        "$XSAPPNAME.User"
+      ]
+    },
+    {
+      "name": "Admin",
+      "description": "Administrator role with full access",
+      "scope-references": [
+        "$XSAPPNAME.User",
+        "$XSAPPNAME.Admin"
+      ]
+    }
+  ],
+  "role-collections": [
+    {
+      "name": "DocTranslation_User",
+      "description": "User role collection for document translation app",
+      "role-template-references": [
+        "$XSAPPNAME.User"
+      ]
+    },
+    {
+      "name": "DocTranslation_Admin",
+      "description": "Admin role collection for document translation app",
+      "role-template-references": [
+        "$XSAPPNAME.Admin"
+      ]
+    }
+  ]
 }

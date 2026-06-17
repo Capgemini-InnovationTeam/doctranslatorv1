@@ -148,7 +148,7 @@ sap.ui.define([
   //          });
   //      },
 	
-		onUploadPress: function (oFileData, index) {
+		onUploadPress: function (_oFileData, _index) {
 			
 				this.getView().byId("translate").setEnabled(false);
 	 MessageBox.information("Batch Document Translation is Successfully Intiated and Once it is Completed you will be notify through Mail. ");
@@ -228,9 +228,9 @@ sap.ui.define([
 					}
 					//	that.loadFileStatuses();
 						that.saveFileStatuses();
-					} catch (error) {
-						
-						MessageBox.error(response);
+				} catch (_error) {
+					
+					MessageBox.error(response);
                        that.response = response;
 				
 						that.failureMail();
@@ -240,20 +240,20 @@ sap.ui.define([
 					that.oBusyDialog.close();
 					that.getView().byId("upload").clear();
 				},
-				error: function (jqXHR, textStatus, errorThrown) {
-					
-						
-					that.oBusyDialog.close();
-					that.GCPSrcFile();
-					that.GCPDstFile();
-					//	sap.m.MessageBox.error("POST request failed");
-//	that.loadFileStatuses();
+			error: function (_jqXHR, _textStatus, _errorThrown) {
 				
-				}
-			});
+					
+				that.oBusyDialog.close();
+				that.GCPSrcFile();
+				that.GCPDstFile();
+				//	sap.m.MessageBox.error("POST request failed");
+//	that.loadFileStatuses();
+			
+			}
+		});
 
-		},
-		GCPSrcFile: function () {
+	},
+	GCPSrcFile: function () {
 			var that = this;
 			$.ajax({
 				url: "https://gcpbatchdocumenttranslation.cfapps.us10-001.hana.ondemand.com/sourcefiles",
@@ -285,27 +285,27 @@ sap.ui.define([
 							}
 						});
 
-						oModel.setProperty("/files", aFiles);
-						that.saveFileStatuses();
-					} catch (error) {
-					//	MessageBox.error(response);
-
-						that.saveFileStatuses();
-					}
-
-					that.oBusyDialog.close();
-					that.getView().byId("upload").clear();
-				},
-				error: function (jqXHR, textStatus, errorThrown) {
-					that.oBusyDialog.close();
-					
-					sap.m.MessageBox.error("POST request failed");
+					oModel.setProperty("/files", aFiles);
+					that.saveFileStatuses();
+				} catch (_error) {
+				//	MessageBox.error(response);
 
 					that.saveFileStatuses();
 				}
-			});
-		},
-		GCPDstFile: function () {
+
+				that.oBusyDialog.close();
+				that.getView().byId("upload").clear();
+			},
+			error: function (_jqXHR, _textStatus, _errorThrown) {
+				that.oBusyDialog.close();
+				
+				sap.m.MessageBox.error("POST request failed");
+
+				that.saveFileStatuses();
+			}
+		});
+	},
+	GCPDstFile: function () {
 			var that = this;
 			$.ajax({
 				url: "https://gcpbatchdocumenttranslation.cfapps.us10-001.hana.ondemand.com/translatedfiles",
@@ -339,30 +339,30 @@ var startTime = new Date(aFiles[0].startAt);
 						
 						});
 	
-						oModel.setProperty("/files", aFiles);
-						that.saveFileStatuses();
-					// 	if(aFiles[0].status === "Complete"){
-					// 		this.registerWorkflow();
-					// }
-					} catch (error) {
-					//	MessageBox.error(response);
-
-						that.saveFileStatuses();
-					}
-
-					that.oBusyDialog.close();
-					that.getView().byId("upload").clear();
-				},
-				error: function (jqXHR, textStatus, errorThrown) {
-					that.oBusyDialog.close();
-				
-					sap.m.MessageBox.error("POST request failed");
+				oModel.setProperty("/files", aFiles);
+					that.saveFileStatuses();
+				// 	if(aFiles[0].status === "Complete"){
+				// 		this.registerWorkflow();
+				// }
+				} catch (_error) {
+				//	MessageBox.error(response);
 
 					that.saveFileStatuses();
 				}
-			});
-		},
-		saveFileStatuses: function () {
+
+				that.oBusyDialog.close();
+				that.getView().byId("upload").clear();
+			},
+			error: function (_jqXHR, _textStatus, _errorThrown) {
+				that.oBusyDialog.close();
+			
+				sap.m.MessageBox.error("POST request failed");
+
+				that.saveFileStatuses();
+			}
+		});
+	},
+	saveFileStatuses: function () {
 		
 			var oModel = this.getView().getModel();
 			var aFiles = oModel.getProperty("/files");
@@ -513,12 +513,12 @@ var startTime = new Date(aFiles[0].startAt);
 				oView.addDependent(oDialog);
 				oViewSettingsDialog = oDialog;
 				oViewSettingsDialog.open();
-			}.bind(this)).catch(function (oError) {
-				// Handle error
-			
-			});
-		},
-		handleFilterButtonPressed: function () {
+		}.bind(this)).catch(function (_oError) {
+			// Handle error
+		
+		});
+	},
+	handleFilterButtonPressed: function () {
 			var oView = this.getView();
 			var sFragmentPath = "doctran.view.fragments.FilterDialog";
 			var oViewSettingsDialog;
@@ -532,13 +532,13 @@ var startTime = new Date(aFiles[0].startAt);
 				oView.addDependent(oDialog);
 				oViewSettingsDialog = oDialog;
 				oViewSettingsDialog.open();
-			}.bind(this)).catch(function (oError) {
-				// Handle error
-				
-			});
-		},
+		}.bind(this)).catch(function (_oError) {
+			// Handle error
+			
+		});
+	},
 
-		handleSortDialogConfirm: function (oEvent) {
+	handleSortDialogConfirm: function (oEvent) {
 			var oTable = this.byId("idSummaryTable"),
 				mParams = oEvent.getParameters(),
 				oBinding = oTable.getBinding("items"),

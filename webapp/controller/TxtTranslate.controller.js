@@ -88,9 +88,9 @@ sap.ui.define([
 		
 			this.file = oEvent.getParameter("files");
 			this.fileName = this.file.name;
-			var allowedFileTypes = ["application/pdf", "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-				"application/vnd.openxmlformats-officedocument.presentationml.presentation"
-			];
+		var _allowedFileTypes = ["application/pdf", "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+			"application/vnd.openxmlformats-officedocument.presentationml.presentation"
+		];
 
 			if (!this.file || this.file.length === 0) {
 				MessageToast.show("Please select files first.");
@@ -168,23 +168,23 @@ sap.ui.define([
 
 						oModel.setProperty("/files", aFiles);
 
-					} catch (error) {
-						MessageBox.error(response);
-						
-						  oModel.setProperty("/files/" + index + "/status", "Failed");
-					}
+				} catch (_error) {
+					MessageBox.error(response);
+					
+					  oModel.setProperty("/files/" + index + "/status", "Failed");
+				}
 
 					that.oBusyDialog.close();
 					that.getView().byId("upload").clear();
 				},
-				error: function (jqXHR, textStatus, errorThrown) {
-					var oModel = that.getView().getModel();
-					that.oBusyDialog.close();
-					// this.oBusyDialog.close();
-					sap.m.MessageBox.error("POST request failed");
-				
-					oModel.setProperty("/files/" + index + "/status", "Failed");
-				}
+			error: function (_jqXHR, _textStatus, _errorThrown) {
+				var oModel = that.getView().getModel();
+				that.oBusyDialog.close();
+				// this.oBusyDialog.close();
+				sap.m.MessageBox.error("POST request failed");
+			
+				oModel.setProperty("/files/" + index + "/status", "Failed");
+			}
 			});
 
 		},
@@ -297,12 +297,12 @@ sap.ui.define([
 				oView.addDependent(oDialog);
 				oViewSettingsDialog = oDialog;
 				oViewSettingsDialog.open();
-			}.bind(this)).catch(function (oError) {
-				// Handle error
-				
-			});
-		},
-		handleFilterButtonPressed: function () {
+		}.bind(this)).catch(function (_oError) {
+			// Handle error
+			
+		});
+	},
+	handleFilterButtonPressed: function () {
 			var oView = this.getView();
 			var sFragmentPath = "doctranslationv1.view.fragments.FilterDialog";
 			var oViewSettingsDialog;
@@ -316,13 +316,13 @@ sap.ui.define([
 				oView.addDependent(oDialog);
 				oViewSettingsDialog = oDialog;
 				oViewSettingsDialog.open();
-			}.bind(this)).catch(function (oError) {
-				// Handle error
-				
-			});
-		},
+		}.bind(this)).catch(function (_oError) {
+			// Handle error
+			
+		});
+	},
 
-		handleSortDialogConfirm: function (oEvent) {
+	handleSortDialogConfirm: function (oEvent) {
 			var oTable = this.byId("idSummaryTable"),
 				mParams = oEvent.getParameters(),
 				oBinding = oTable.getBinding("items"),

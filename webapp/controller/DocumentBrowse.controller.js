@@ -131,11 +131,11 @@ sap.ui.define([
 									response = JSON.parse(response);
 								}
 
-								var aFiles = oModel.getProperty("/files");
-								var destlink = Object.keys(response.dest).reverse();
-								var srclink = Object.keys(response.src).reverse();
+							var aFiles = oModel.getProperty("/files");
+							var destlink = Object.keys(response.dest).reverse();
+							var _srclink = Object.keys(response.src).reverse();
 
-								aFiles.forEach(function (file, index) {
+							aFiles.forEach(function (file, index) {
 									if (index < destlink.length) {
 										var key = destlink[index];
 										file.translatedDocument = response.dest[key];
@@ -145,9 +145,9 @@ sap.ui.define([
 									}
 								});
 
-								oModel.setProperty("/files", aFiles);
-							} catch (error) {
-								MessageBox.error(response);
+						oModel.setProperty("/files", aFiles);
+						} catch (_error) {
+							MessageBox.error(response);
 								oModel.setProperty("/files/" + index + "/status", "Failed");
 							}
 
