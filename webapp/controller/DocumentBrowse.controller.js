@@ -1,22 +1,13 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/ui/model/json/JSONModel",
-	"sap/ui/layout/VerticalLayout",
-	"sap/ui/unified/FileUploader",
-	"sap/m/Button",
 	"sap/m/MessageToast",
-	"sap/ui/core/format/DateFormat",
 	"sap/m/MessageBox",
-	"sap/m/Link",
 	"sap/ui/core/Fragment",
-	'sap/ui/model/Filter',
-	'sap/ui/model/Sorter',
-	'sap/ui/export/Spreadsheet',
-	"sap/ui/model/FilterOperator",
-	"sap/m/VBox",
+	"sap/ui/model/Sorter",
+	"sap/ui/export/Spreadsheet",
 	"sap/ui/Device"
-], function (Controller, JSONModel, VerticalLayout, FileUploader, Button, MessageToast, DateFormat, MessageBox, Link, Fragment, Filter,
-	Sorter, Spreadsheet, FilterOperator, VBox,Device) {
+], function (Controller, JSONModel, MessageToast, MessageBox, Fragment, Sorter, Spreadsheet, Device) {
 	"use strict";
 
 	return Controller.extend("doctranslationv1.controller.DocumentBrowse", {

@@ -1,22 +1,13 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/ui/model/json/JSONModel",
-	"sap/ui/layout/VerticalLayout",
-	"sap/ui/unified/FileUploader",
-	"sap/m/Button",
 	"sap/m/MessageToast",
-	"sap/ui/core/format/DateFormat",
 	"sap/m/MessageBox",
-	"sap/m/Link",
 	"sap/ui/core/Fragment",
-	'sap/ui/model/Filter',
-	'sap/ui/model/Sorter',
-	'sap/ui/export/Spreadsheet',
-	"sap/ui/model/FilterOperator",
-	"sap/m/VBox",
+	"sap/ui/model/Sorter",
+	"sap/ui/export/Spreadsheet",
 	"sap/ui/Device"
-], function (Controller, JSONModel, VerticalLayout, FileUploader, Button, MessageToast, DateFormat, MessageBox, Link, Fragment, Filter,
-	Sorter, Spreadsheet, FilterOperator, VBox,Device) {
+], function (Controller, JSONModel, MessageToast, MessageBox, Fragment, Sorter, Spreadsheet, Device) {
 	"use strict";
 
 	return Controller.extend("doctranslationv1.controller.BatchTranslation", {
@@ -45,9 +36,8 @@ sap.ui.define([
 		},
 		handleRefresh: function () {
 			this.loadFileStatuses();
-			 this.GCPSrcFile();
-			 this.GCPDstFile();
-			// this.saveFileStatuses();
+			this.GCPSrcFile();
+			this.GCPDstFile();
 		},
 		onLanguageSelect: function (oEvent) {
 
@@ -95,67 +85,13 @@ sap.ui.define([
 			oModel.setProperty("/files", aFileData);
 			this.saveFileStatuses();
 		},
-	 //handleFileChange: function (oEvent) {
-	 //	
-  //          var aFiles = oEvent.getParameter("files");
-  //          var oModel = this.getView().getModel();
-  //          var aFileData = oModel.getProperty("/files");
 
-  //          if (aFiles && aFiles.length > 0) {
-  //              for (var i = 0; i < aFiles.length; i++) {
-  //                  var file = aFiles[i];
-  //                  if (file instanceof File && file.type === "application/x-zip-compressed") {
-  //                      this._handleZipFile(file);
-  //                  } else {
-  //                     this.handleNormalFileChange();
-  //                  }
-  //              }
-
-  //              oModel.setProperty("/files", aFileData);
-  //              this.saveFileStatuses();
-  //          } else {
-  //              MessageBox.error("No files selected. Please select files to upload.");
-  //          }
-  //      },
-
-  //      _handleZipFile: function (file) {
-  //      	
-  //          var oModel = this.getView().getModel();
-  //          var aFileData = oModel.getProperty("/files");
-
-  //          JSZip.loadAsync(file).then(function (zip) {
-  //              zip.forEach(function (relativePath, zipEntry) {
-  //                  zipEntry.async("blob").then(function (blob) {
-  //                  	
-  //                      aFileData.push({
-                        	
-  //                          fileName: zipEntry.name,
-  //                          translationLanguage: "",
-  //                          progress: 0,
-  //                          status: "Pending",
-  //                          translatedDocument: "",
-                         
-  //                          startAt: "", // Will be set when the upload starts
-  //                          completedAt: "", // Will be set when the upload completes
-  //                          fileObject: blob // Store the Blob object
-  //                      });
-  //                      oModel.setProperty("/files", aFileData);
-  //                      this.saveFileStatuses();
-  //                  }.bind(this));
-  //              }.bind(this));
-  //          }.bind(this)).catch(function (err) {
-  //              MessageBox.error("Error reading ZIP file: " + err.message);
-  //          });
-  //      },
-	
 		onUploadPress: function (_oFileData, _index) {
 			
 				this.getView().byId("batchTranslate").setEnabled(false);
-	 MessageBox.information("Batch Document Translation is Successfully Intiated and Once it is Completed you will be notify through Mail. ");
-	
-		//	this.oBusyDialog.open();
-		
-	var oModel = this.getView().getModel();
+			MessageBox.information("Batch Document Translation is Successfully Intiated and Once it is Completed you will be notify through Mail. ");
+
+			var oModel = this.getView().getModel();
 			var gFiles = oModel.getProperty("/files");
 
 			gFiles.forEach(function (file) {
@@ -164,20 +100,12 @@ sap.ui.define([
 
 			oModel.setProperty("/files", gFiles);
 			this.saveFileStatuses();
-			 //setTimeout(function () {
-    //           if(gFiles[0].status === "Complete"){
-				// 		this.registerWorkflow();
-				// 	 }
-    //         }.bind(this), 10 * 60 * 1000); 
+
 			var apiLink = "https://gcpbatchdocumenttranslation.cfapps.us10-001.hana.ondemand.com/gcpbatchdocumenttranslation";
-			//var form = new FormData();
-			//         form.append("files", oFileData.fileObject, oFileData.fileName);
 			var form = new FormData();
 			for (var i = 0; i < gFiles.length; i++) {
-				 form.append("files", this.file[i], this.file[i].name);
+				form.append("files", this.file[i], this.file[i].name);
 				form.append("target_language", this.lang);
-				 //form.append("files", gFiles[i].fileObject, gFiles[i].fileName);
-				 //form.append("target_language", gFiles[i].translationLanguage);
 				form.append("source_language", "en-US");
 			}
 
@@ -191,11 +119,6 @@ sap.ui.define([
 				contentType: false,
 				data: form,
 				success: function (response) {
-					
-	// busy.close();
-					
-
-				//	var oModel = that.getView().getModel();
 					try {
 						if (typeof response === "string") {
 							response = JSON.parse(response);
@@ -213,7 +136,6 @@ sap.ui.define([
 									oModel.setProperty("/files", aFiles);
 								} else {
 									file.translatedDocument = response[key];
-									// file.sourceFileLink = response[key];
 									file.progress = 100;
 									file.status = "Complete";
 									file.completedAt = new Date().toLocaleString();
@@ -226,7 +148,6 @@ sap.ui.define([
 						if(aFiles[0].status === "Complete"){
 							that.registerWorkflow();
 					}
-					//	that.loadFileStatuses();
 						that.saveFileStatuses();
 				} catch (_error) {
 					
@@ -236,7 +157,6 @@ sap.ui.define([
 						that.failureMail();
 							that.saveFileStatuses();
 					}
-	// busy.close();
 					that.oBusyDialog.close();
 				that.getView().byId("batchUpload").clear();
 			},
@@ -246,9 +166,6 @@ sap.ui.define([
 				that.oBusyDialog.close();
 				that.GCPSrcFile();
 				that.GCPDstFile();
-				//	sap.m.MessageBox.error("POST request failed");
-//	that.loadFileStatuses();
-			
 			}
 		});
 
@@ -288,8 +205,6 @@ sap.ui.define([
 					oModel.setProperty("/files", aFiles);
 					that.saveFileStatuses();
 				} catch (_error) {
-				//	MessageBox.error(response);
-
 					that.saveFileStatuses();
 				}
 
@@ -331,7 +246,6 @@ var startTime = new Date(aFiles[0].startAt);
 	var key = destlink[index+1];
 						
 									file.translatedDocument = response[key];
-								//	file.completedAt = new Date().toLocaleString();
 									file.completedAt = new Date(startTime.getTime() + 10 * 60 * 1000).toLocaleString();
 									file.progress = 100;
 									file.status = "Complete";
@@ -341,12 +255,7 @@ var startTime = new Date(aFiles[0].startAt);
 	
 				oModel.setProperty("/files", aFiles);
 					that.saveFileStatuses();
-				// 	if(aFiles[0].status === "Complete"){
-				// 		this.registerWorkflow();
-				// }
 				} catch (_error) {
-				//	MessageBox.error(response);
-
 					that.saveFileStatuses();
 				}
 
@@ -367,9 +276,6 @@ saveFileStatuses: function () {
 			var oModel = this.getView().getModel();
 			var aFiles = oModel.getProperty("/files");
 			localStorage.setItem("uploadedFiles", JSON.stringify(aFiles));
-				// var gFiles = JSON.parse(localStorage.getItem("uploadedFiles") || "[]");
-					
-				// 		oModel.setProperty("/files", aFiles);
 		},
 
 		loadFileStatuses: function () {
@@ -388,14 +294,10 @@ saveFileStatuses: function () {
 
 			aFiles.forEach(function (oFileData) {
 				if (oFileData.status === "Pending") {
-				
-					// setTimeout(function () {
-						//  var status = Math.random() > 0.5 ? "Success" : "Failed"; // Simulate success or failure
-						oFileData.status = "Pending";
-						oFileData.progress = 0;
-						oModel.setProperty("/files", aFiles);
-						this.saveFileStatuses();
-					// }.bind(this), 5000); // Simulate a delay
+					oFileData.status = "Pending";
+					oFileData.progress = 0;
+					oModel.setProperty("/files", aFiles);
+					this.saveFileStatuses();
 				}
 			}.bind(this));
 				var currentdate = new Date().toLocaleString();
@@ -623,23 +525,16 @@ saveFileStatuses: function () {
 			xhr.withCredentials = false;
 			xhr.addEventListener("readystatechange", function () {
 				if (this.readyState === this.DONE) {
-					
-					// sap.m.MessageBox.information(
-					// 	"Batch Document Translation is Successfully Intiated and Once it is Completed you will be notify through Mail");
-					// tracking.trackEvent("Button", "Click", "Submit", 1);
 				}
 			});
 			var url1 = '/destination/bpmworkflowruntime1/workflow-service/rest/v1/workflow-instances';
-			//setting request method
 			xhr.open("POST", url1);
-			//adding request headers
 			xhr.setRequestHeader("X-CSRF-Token", this._token);
 			xhr.setRequestHeader("Content-Type", "application/json");
 			xhr.setRequestHeader("Accept", "application/json");
-			//sending request
 			xhr.send(payload);
 		},
-			failureMail: function () {
+		failureMail: function () {
 			this.getTokenForWOrkflow();
 			var payload = JSON.stringify({
 				"definitionId": "failuremail",
@@ -652,20 +547,13 @@ saveFileStatuses: function () {
 			xhr.withCredentials = false;
 			xhr.addEventListener("readystatechange", function () {
 				if (this.readyState === this.DONE) {
-					
-					// sap.m.MessageBox.information(
-					// 	"Batch Document Translation is Successfully Intiated and Once it is Completed you will be notify through Mail");
-					// tracking.trackEvent("Button", "Click", "Submit", 1);
 				}
 			});
 			var url1 = '/destination/bpmworkflowruntime1/workflow-service/rest/v1/workflow-instances';
-			//setting request method
 			xhr.open("POST", url1);
-			//adding request headers
 			xhr.setRequestHeader("X-CSRF-Token", this._token);
 			xhr.setRequestHeader("Content-Type", "application/json");
 			xhr.setRequestHeader("Accept", "application/json");
-			//sending request
 			xhr.send(payload);
 		},
 		getTokenForWOrkflow: function () {

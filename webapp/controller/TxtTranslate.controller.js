@@ -1,22 +1,13 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/ui/model/json/JSONModel",
-	"sap/ui/layout/VerticalLayout",
-	"sap/ui/unified/FileUploader",
-	"sap/m/Button",
 	"sap/m/MessageToast",
-	"sap/ui/core/format/DateFormat",
 	"sap/m/MessageBox",
-	"sap/m/Link",
 	"sap/ui/core/Fragment",
-	'sap/ui/model/Filter',
-	'sap/ui/model/Sorter',
-	'sap/ui/export/Spreadsheet',
-	"sap/ui/model/FilterOperator",
-	"sap/m/VBox",
+	"sap/ui/model/Sorter",
+	"sap/ui/export/Spreadsheet",
 	"sap/ui/Device"
-], function (Controller, JSONModel, VerticalLayout, FileUploader, Button, MessageToast, DateFormat, MessageBox, Link, Fragment, Filter,
-	Sorter, Spreadsheet, FilterOperator, VBox,Device) {
+], function (Controller, JSONModel, MessageToast, MessageBox, Fragment, Sorter, Spreadsheet, Device) {
 	"use strict";
 
 	return Controller.extend("doctranslationv1.controller.TxtTranslate", {
@@ -99,8 +90,7 @@ sap.ui.define([
 			var oModel = this.getView().getModel();
 			var aFileData = oModel.getProperty("/files");
 		
-				for (var i = 0; i < this.file.length; i++) {
-						// if (allowedFileTypes.includes(this.file[i].type)) {
+						for (var i = 0; i < this.file.length; i++) {
 					aFileData.push({
 						fileName: this.file[i].name,
 						translationLanguage: "",
@@ -110,10 +100,6 @@ sap.ui.define([
 						sourceFileLink: "",
 						fileObject: this.file[i]
 					});
-			// 	} else {
-			// 	MessageBox.error("Unsupported file type: " + this.file[i].name);
-			// 		this.getView().byId("upload").clear();
-			// }
 				}
 		
 			oModel.setProperty("/files", aFileData);
@@ -124,8 +110,6 @@ sap.ui.define([
 			this.oBusyDialog.open();
 
 			var apiLink = "https://gcpdocumenttranslation.cfapps.us10-001.hana.ondemand.com/gcpdocumenttranslation";
-			//var form = new FormData();
-			//         form.append("files", oFileData.fileObject, oFileData.fileName);
 			var form = new FormData();
 			for (var i = 0; i < this.file.length; i++) {
 				form.append("files", this.file[i], this.file[i].name);
@@ -180,7 +164,6 @@ sap.ui.define([
 		error: function (_jqXHR, _textStatus, _errorThrown) {
 				var oModel = that.getView().getModel();
 				that.oBusyDialog.close();
-				// this.oBusyDialog.close();
 				sap.m.MessageBox.error("POST request failed");
 			
 				oModel.setProperty("/files/" + index + "/status", "Failed");
