@@ -6,8 +6,6 @@
 				<customHeader>
 					<Bar>
 						<contentLeft>
-							<!--<Image src="https://res.cloudinary.com/coeportalimage1/image/upload/v1691002293/openai/openai_sb6krr.png" width="8.7rem"/>-->
-							<!--<Image src="images/ailogo.png" width="150px"/>-->
 							<Button icon="sap-icon://nav-back" press="navBack"/>
 						</contentLeft>
 						<contentMiddle >
@@ -15,8 +13,6 @@
 						</contentMiddle>
 						<contentRight>
 							<Image src="images/whitelogocg.png" width="8.7rem"/>
-							<!--	<Button icon="sap-icon://action-settings" press="onChangeOpenAISettings"/>-->
-							<!--<Button icon="sap-icon://log" press="onlogoutPress"/>-->
 						</contentRight>
 					</Bar>
 				</customHeader>
@@ -29,19 +25,14 @@
 						
 							</VBox>
 							<HBox>
-									<!--<Button type="Emphasized" class="sapUiLargeMarginBegin" text="Template" press="Templatepress"></Button>-->
 						<u:FileUploader buttonText="Upload" buttonOnly="false" style="Emphasized" id="txtUpload" class="sapUiMediumMarginBegin" width="100%" name="myFileUpload" multiple="true" uploadUrl="upload/"  tooltip="Upload your file to the local server"
 							change="handleFileChange"/>
 							
 							 <Select  items="{languages>/GCPlanguages}" class="sapUiLargeMarginBegin"  id="txtLanguageSelect" change=".onLanguageSelect">
 							 	<core:Item key="" text="" />
                                 <core:Item key="{languages>code}" text="{languages>name}" />
-           
-            <!-- Add more languages as needed -->
         </Select>
 							<Button id="txtTranslate" type="Emphasized" class="sapUiMediumMarginBegin" enabled="false" text="Translate" press="onUploadPress"></Button>
-						 <!--<VBox  class="sapUiMediumMarginBegin" id="linksContainer" width="100%" height="auto" />-->
-						<!-- Removed Create PPT button -->
 							<Button type="Emphasized" class="sapUiLargeMarginBegin" text="Clear all" press="handleClear"></Button>
 						</HBox>
 				
@@ -55,8 +46,6 @@
 											<Button tooltip="Sort" icon="sap-icon://sort" press="handleSortButtonPressed"/>
 											<Button tooltip="Filter" icon="sap-icon://filter" press="handleFilterButtonPressed"/>
 											<Button tooltip="Export Translation Log" icon="sap-icon://excel-attachment" press="onExport"/>
-											<!--<Button tooltip="Refresh" icon="sap-icon://refresh" press="handleRefreshPressed"/>-->
-											<!--<ToggleButton icon="sap-icon://menu" tooltip="Enable Custom Context Menu" press="onToggleContextMenu" />-->
 										</OverflowToolbar>
 									</headerToolbar>
 						<columns>

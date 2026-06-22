@@ -100,58 +100,95 @@ sap.ui.define([
 
 			var that = this;
 
+			// First, fetch the CSRF token from the API endpoint
 			$.ajax({
-				url: that.appModulePath + "/index.html",
-				method: "GET",
+				url: that.appModulePath + "/doc-translation-api/",
+				method: "HEAD",
 				headers: { "X-CSRF-Token": "Fetch" },
-				complete: function (jqXHR) {
+				success: function (data, textStatus, jqXHR) {
 					var csrfToken = jqXHR.getResponseHeader("X-CSRF-Token");
+					that._performUpload(apiLink, form, csrfToken, index);
+				},
+				error: function (jqXHR) {
+					// Try to get token from response header even on error
+					var csrfToken = jqXHR.getResponseHeader("X-CSRF-Token");
+					if (csrfToken && csrfToken !== "Required") {
+						that._performUpload(apiLink, form, csrfToken, index);
+					} else {
+						// Fallback: try fetching from the app root
+						$.ajax({
+							url: that.appModulePath + "/",
+							method: "GET",
+							headers: { "X-CSRF-Token": "Fetch" },
+							complete: function (fallbackXHR) {
+								var fallbackToken = fallbackXHR.getResponseHeader("X-CSRF-Token");
+								that._performUpload(apiLink, form, fallbackToken, index);
+							}
+						});
+					}
+				}
+			});
+		},
 
-					$.ajax({
-						url: apiLink,
-						method: "POST",
-						timeout: 0,
-						processData: false,
-						contentType: false,
-						headers: { "X-CSRF-Token": csrfToken || "" },
-						data: form,
-						success: function (response) {
-							var oModel = that.getView().getModel();
-							try {
-								if (typeof response === "string") {
-									response = JSON.parse(response);
-								}
+		_performUpload: function (apiLink, form, csrfToken, index) {
+			var that = this;
 
-							var aFiles = oModel.getProperty("/files");
-							var destlink = Object.keys(response.dest).reverse();
-							var _srclink = Object.keys(response.src).reverse();
+			$.ajax({
+				url: apiLink,
+				method: "POST",
+				timeout: 0,
+				processData: false,
+				contentType: false,
+				headers: { "X-CSRF-Token": csrfToken || "" },
+				data: form,
+				success: function (response) {
+					var oModel = that.getView().getModel();
+					try {
+						if (typeof response === "string") {
+							response = JSON.parse(response);
+						}
 
-							aFiles.forEach(function (file, index) {
-									if (index < destlink.length) {
-										var key = destlink[index];
-										file.translatedDocument = response.dest[key];
-										file.sourceFileLink = response.src[key];
-										file.progress = 100;
-										file.status = "Complete";
-									}
-								});
+						var aFiles = oModel.getProperty("/files");
+						var destlink = Object.keys(response.dest).reverse();
+						var _srclink = Object.keys(response.src).reverse();
+
+						aFiles.forEach(function (file, idx) {
+							if (idx < destlink.length) {
+								var key = destlink[idx];
+								file.translatedDocument = response.dest[key];
+								file.sourceFileLink = response.src[key];
+								file.progress = 100;
+								file.status = "Complete";
+							}
+						});
 
 						oModel.setProperty("/files", aFiles);
-						} catch (_error) {
-							MessageBox.error(response);
-								oModel.setProperty("/files/" + index + "/status", "Failed");
-							}
+					} catch (_error) {
+						MessageBox.error(response);
+						oModel.setProperty("/files/" + index + "/status", "Failed");
+					}
 
-						that.oBusyDialog.close();
-						that.getView().byId("docUpload").clear();
-					},
-						error: function (jqXHR, textStatus, errorThrown) {
-							that.oBusyDialog.close();
-							MessageBox.error("POST request failed: " + errorThrown);
-							var oModel = that.getView().getModel();
-							oModel.setProperty("/files/" + index + "/status", "Failed");
+					that.oBusyDialog.close();
+					that.getView().byId("docUpload").clear();
+				},
+				error: function (jqXHR, textStatus, errorThrown) {
+					that.oBusyDialog.close();
+					var errorMsg = "Upload failed: ";
+					if (jqXHR.status === 403) {
+						errorMsg += "Access forbidden. Please refresh the page and try again.";
+					} else if (jqXHR.responseText) {
+						try {
+							var errorResponse = JSON.parse(jqXHR.responseText);
+							errorMsg += errorResponse.message || errorThrown;
+						} catch (e) {
+							errorMsg += errorThrown;
 						}
-					});
+					} else {
+						errorMsg += errorThrown;
+					}
+					MessageBox.error(errorMsg);
+					var oModel = that.getView().getModel();
+					oModel.setProperty("/files/" + index + "/status", "Failed");
 				}
 			});
 		},

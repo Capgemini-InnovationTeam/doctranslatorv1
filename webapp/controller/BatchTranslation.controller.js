@@ -425,8 +425,6 @@ saveFileStatuses: function () {
 				oViewSettingsDialog = oDialog;
 				oViewSettingsDialog.open();
 		}.bind(this)).catch(function (_oError) {
-			// Handle error
-		
 		});
 	},
 	handleFilterButtonPressed: function () {
@@ -444,8 +442,6 @@ saveFileStatuses: function () {
 				oViewSettingsDialog = oDialog;
 				oViewSettingsDialog.open();
 		}.bind(this)).catch(function (_oError) {
-			// Handle error
-			
 		});
 	},
 

@@ -291,8 +291,6 @@ sap.ui.define([
 				oViewSettingsDialog = oDialog;
 				oViewSettingsDialog.open();
 		}.bind(this)).catch(function (_oError) {
-			// Handle error
-			
 		});
 	},
 	handleFilterButtonPressed: function () {
@@ -310,8 +308,6 @@ sap.ui.define([
 				oViewSettingsDialog = oDialog;
 				oViewSettingsDialog.open();
 		}.bind(this)).catch(function (_oError) {
-			// Handle error
-			
 		});
 	},
 

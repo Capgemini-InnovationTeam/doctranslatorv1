@@ -6,8 +6,6 @@
 				<customHeader>
 					<Bar>
 						<contentLeft>
-							<!--<Image src="https://res.cloudinary.com/coeportalimage1/image/upload/v1691002293/openai/openai_sb6krr.png" width="8.7rem"/>-->
-							<!--<Image src="images/ailogo.png" width="150px"/>-->
 							<Button icon="sap-icon://nav-back" press="navBack"/>
 						</contentLeft>
 						<contentMiddle >
@@ -15,8 +13,6 @@
 						</contentMiddle>
 						<contentRight>
 							<Image src="images/whitelogocg.png" width="8.7rem"/>
-							<!--	<Button icon="sap-icon://action-settings" press="onChangeOpenAISettings"/>-->
-							<!--<Button icon="sap-icon://log" press="onlogoutPress"/>-->
 						</contentRight>
 					</Bar>
 				</customHeader>
@@ -35,12 +31,8 @@
 							 <Select  items="{languages>/GCPlanguages}"  class="sapUiLargeMarginBegin"  id="batchLanguageSelect" change=".onLanguageSelect">
 							 	<core:Item key="" text="" />
                                 <core:Item key="{languages>code}" text="{languages>name}" />
-           
-            <!-- Add more languages as needed -->
         </Select>
 							<Button id="batchTranslate" type="Emphasized" class="sapUiMediumMarginBegin" enabled="false" text="Translate" press="onUploadPress"></Button>
-						 <!--<VBox  class="sapUiMediumMarginBegin" id="linksContainer" width="100%" height="auto" />-->
-						<!-- Removed Create PPT button -->
 							<Button type="Emphasized" class="sapUiLargeMarginBegin" text="Clear all" press="handleClear"></Button>
 								<Button type="Emphasized" class="sapUiLargeMarginBegin" text="Refresh" press="handleRefresh"></Button>
 						</HBox>
@@ -55,8 +47,6 @@
 											<Button tooltip="Sort" icon="sap-icon://sort" press="handleSortButtonPressed"/>
 											<Button tooltip="Filter" icon="sap-icon://filter" press="handleFilterButtonPressed"/>
 											<Button tooltip="Export Translation Log" icon="sap-icon://excel-attachment" press="onExport"/>
-											<!--<Button tooltip="Refresh" icon="sap-icon://refresh" press="handleRefreshPressed"/>-->
-											<!--<ToggleButton icon="sap-icon://menu" tooltip="Enable Custom Context Menu" press="onToggleContextMenu" />-->
 										</OverflowToolbar>
 									</headerToolbar>
 						<columns>
@@ -92,7 +82,7 @@
                        <Link  text="View Source" href="{sourceFileLink}" target="_blank" visible="{= ${sourceFileLink} ? true : false}" />
                         <Text text="{translationLanguage}" />
                       <Link  text="View Document" href="{translatedDocument}" target="_blank" visible="{= ${translatedDocument} ? true : false}" />
-                       <ProgressIndicator width="60%" percentValue="{progress}" displayValue="{progress}%" state="{= ${progress} === 100 ? 'Success' : 'None'}"/>
+                       <ProgressIndicator width="100%" percentValue="{progress}" displayValue="{progress}%" state="{= ${progress} === 100 ? 'Success' : 'None'}"/>
                       <ObjectStatus text="{status}" state="{= ${status} === 'Complete' ? 'Success' : 'Warning'}"/>
                        <Text text="{startAt}" />
                         <Text text="{completedAt}" />

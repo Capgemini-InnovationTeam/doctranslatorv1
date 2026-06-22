@@ -20,17 +20,14 @@ sap.ui.define([
             this._oRouter.navTo("DocumentBrowse");
         },
  
-        // 👉 GCP click
         ontxtpress: function () {
             this._showComingSoonDialog();
         },
  
-        // 👉 Batch click
         onbatch: function () {
             this._showComingSoonDialog();
         },
  
-        // 🔥 CLEAN CENTER POPUP FUNCTION
         _showComingSoonDialog: function () {
             if (!this._oDialog) {
                 this._oDialog = new Dialog({
