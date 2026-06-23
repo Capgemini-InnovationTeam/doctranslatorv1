@@ -10,7 +10,7 @@ sap.ui.define([
 ], function (Controller, JSONModel, MessageToast, MessageBox, Fragment, Sorter, Spreadsheet, Device) {
 	"use strict";
 
-	// API endpoints configured via destinations (see xs-app.json)
+	
 	var API_CONFIG = {
 		documentTranslation: {
 			upload: "/gcp-doc-api/gcpdocumenttranslation"

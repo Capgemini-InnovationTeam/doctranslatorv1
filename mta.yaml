@@ -17,6 +17,7 @@ modules:
     parameters:
       service-key:
         name: doctranslationv1-uaa-key
+  - name: doctranslationv1-html5-repo-runtime
   parameters:
     content:
       instance:
@@ -24,12 +25,12 @@ modules:
         - Name: doctranslationv1_html_repo_host
           ServiceInstanceName: doctranslationv1-html5-service
           ServiceKeyName: doctranslationv1-repo-host-key
-          sap.cloud.service: doctranslationv1
+          sap.cloud.service: dt.doctranslationv1
         - Authentication: OAuth2UserTokenExchange
           Name: doctranslationv1_uaa
           ServiceInstanceName: doctranslationv1-xsuaa-service
           ServiceKeyName: doctranslationv1-uaa-key
-          sap.cloud.service: doctranslationv1
+          sap.cloud.service: dt.doctranslationv1
         existing_destinations_policy: update
   build-parameters:
     no-source: true
@@ -89,6 +90,12 @@ resources:
     service: html5-apps-repo
     service-name: doctranslationv1-html5-service
     service-plan: app-host
+- name: doctranslationv1-html5-repo-runtime
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-name: doctranslationv1-html5-runtime
+    service-plan: app-runtime
 parameters:
   deploy_mode: html5-repo
   enable-parallel-deployments: true
